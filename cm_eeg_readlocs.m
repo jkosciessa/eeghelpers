@@ -188,12 +188,15 @@
 % Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 
-function [eloc, labels, theta, radius, indices] = cm_eeg_readlocs( filename, varargin ); 
+function [eloc, labels, theta, radius, indices] = cm_eeg_readlocs( filename, varargin )
+
+% requires
+% cm_eeg_finputcheck
 
 if nargin < 1
 	help readlocs;
 	return;
-end;
+end
 
 % NOTE: To add a new channel format:
 % ----------------------------------
@@ -294,9 +297,9 @@ if isstr(filename) & strcmp(filename, 'getinfos')
    eloc = chanformat;
    labels = listcolformat;
    return;
-end;
+end
 
-g = cm_eeg_finputcheck_20140226( varargin, ...
+g = cm_eeg_finputcheck( varargin, ...
    { 'filetype'	   'string'  {}                 '';
      'importmode'  'string'  { 'eeglab' 'native' } 'eeglab';
      'defaultelp'  'string'  { 'besa'   'polhemus' } 'polhemus';
