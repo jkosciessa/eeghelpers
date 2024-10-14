@@ -137,10 +137,11 @@ if strcmp(cfg.topoall,'yes') && isfield(cfg,'chanlocs')
                 pos_h = b + s_hor*(n-1);
                 axes('position',[pos_h pos_v s_hor s_ver])
                 set(gca,'xtick',[],'ytick',[])
-                nchans = numel(cfg.chanlocs);
+                nchans = size(cfg.chanlocs,1);
                 maplim(1) = min(topo([1:nchans],k));
                 maplim(2) = max(topo([1:nchans],k));
                 maplim = [max(abs(maplim))*-1 max(abs(maplim))];
+                % plot topography
                 cm_eeg_topoplot(topo([1:nchans],k),cfg.chanlocs(1:nchans),maplim);
                 % show IC label
                 text(0,1.05,[num2str(k) ': ' info.cmp{k,1}],'fontsize',8,'units','normalized')

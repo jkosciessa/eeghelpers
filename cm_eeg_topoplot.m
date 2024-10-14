@@ -1,76 +1,83 @@
 function [handle,Zi,grid,Xi,Yi] = cm_eeg_topoplot(Values,loc_file,MAPLIMITS)
 
-%%  functions needed:
+% Plot a single topography
+%
+% functions needed:
 %   - THG_eeg_readlocs
 %   - THG_eeg_finputcheck
 
-%%%%%%%%%%%%%%%%%%%%%%%% Set defaults %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%% Set defaults
 
-% whitebk = 'on';  % by default, make gridplot background color = EEGLAB screen background color
+    % whitebk = 'on';  % by default, make gridplot background color = EEGLAB screen background color
 
-rmax = 0.5;                 % actual head radius - Don't change this!
+    rmax = 0.5;                 % actual head radius - Don't change this!
 
-GRID_SCALE = 57;            % plot map on a n x n grid
-CIRCGRID   = 201;           % number of angles to use in drawing circles
-AXHEADFAC = 1.3;            % head to axes scaling factor
-CONTOURNUM = 6;             % number of contour levels to plot
-STYLE = 'both';             % default 'style': both,straight,fill,contour,blank
+    GRID_SCALE = 57;            % plot map on a n x n grid
+    CIRCGRID   = 201;           % number of angles to use in drawing circles
+    AXHEADFAC = 1.3;            % head to axes scaling factor
+    CONTOURNUM = 6;             % number of contour levels to plot
+    STYLE = 'both';             % default 'style': both,straight,fill,contour,blank
+    HEADCOLOR = [0 0 0];        % default head color (black = [0 0 0])
+    BACKCOLOR = [1 1 1];
+    ELECTRODES = 'on';          % default 'electrodes': on|off|label - set below
+    EMARKER = '.';              % mark electrode locations with small disks
+    EMARKERSIZE = 6;
+    ECOLOR = [0 0 0];           % default electrode color = black
+    EMARKERLINEWIDTH = 1;       % default edge linewidth for emarkers
+    HLINEWIDTH = 1;             % default linewidth for head, nose, ears
+    BLANKINGRINGWIDTH = .05;    % width of the blanking ring 
+    HEADRINGWIDTH    = .01;     % width of the cartoon head ring
+    % SHADING = 'flat';         % default 'shading': flat|interp
 
-HEADCOLOR = [0 0 0];        % default head color (black = [0 0 0])
-BACKCOLOR = [1 1 1];
-
-ELECTRODES = 'on';          % default 'electrodes': on|off|label - set below
-
-EMARKER = '.';              % mark electrode locations with small disks
-EMARKERSIZE = 6;
-
-ECOLOR = [0 0 0];           % default electrode color = black
-
-EMARKERLINEWIDTH = 1;       % default edge linewidth for emarkers
-
-HLINEWIDTH = 1;             % default linewidth for head, nose, ears
-BLANKINGRINGWIDTH = .05;    % width of the blanking ring 
-HEADRINGWIDTH    = .01;     % width of the cartoon head ring
-% SHADING = 'flat';         % default 'shading': flat|interp
-
-cmap = colormap;
-cmaplen = size(cmap,1);
+    cmap = colormap;
+    cmaplen = size(cmap,1);
 
 %% Read the channel location information
-[tmpeloc labels Th Rd indices] = cm_eeg_readlocs( loc_file );
-Th = pi/180*Th;                              
-allchansind = 1:length(Th);
+
+    %[tmpeloc, labels, Th, Rd, indices] = cm_eeg_readlocs(loc_file);
+    [tmpeloc, labels, Th, Rd, indices] = readlocs(loc_file);
+    Th = pi/180*Th;                              
+    allchansind = 1:length(Th);
 
 %%  Channels to plot    
+
     plotchans = indices;
 
-x = [tmpeloc.X];
-y = [tmpeloc.Y];
-%[x,y]       = pol2cart(Th,Rd);  % transform electrode locations from polar to cartesian coordinates
-plotchans   = abs(plotchans);   % reverse indicated channel polarities
-allchansind = allchansind(plotchans);
-Th          = Th(plotchans);
-Rd          = Rd(plotchans);
-x           = x(plotchans);
-y           = y(plotchans);
-labels      = labels(plotchans); % remove labels for electrodes without locations
-labels      = strvcat(labels); % make a label string matrix
-Values      = Values(plotchans);
+%     if isfield(tmpeloc, 'X') && isfield(tmpeloc, 'Y')
+%         x = [tmpeloc.X];
+%         y = [tmpeloc.Y];
+%     else
+        disp("transforming electrode locations from polar to cartesian coordinates")
+        [x,y]   = pol2cart(Th,Rd);
+%     end
+    plotchans   = abs(plotchans);   % reverse indicated channel polarities
+    allchansind = allchansind(plotchans);
+    Th          = Th(plotchans);
+    Rd          = Rd(plotchans);
+    x           = x(plotchans);
+    y           = y(plotchans);
+    labels      = labels(plotchans); % remove labels for electrodes without locations
+    labels      = strvcat(labels); % make a label string matrix
+    Values      = Values(plotchans);
 
-%%  Read plotting radius from chanlocs  
+%%  Read plotting radius from chanlocs
+
     plotrad = min(1.0,max(Rd)*1.02);            % default: just outside the outermost electrode location
     plotrad = max(plotrad,0.5);                 % default: plot out to the 0.5 head boundary
     default_intrad = 1;                         % indicator for (no) specified intrad
     intrad = min(1.0,max(Rd)*1.02);             % default: just outside the outermost electrode location
-
+    
 %%  Set radius of head cartoon
+
     headrad = rmax;  % (anatomically correct)
 
-%%  Find plotting channels 
+%%  Find plotting channels
+
     pltchans = find(Rd <= plotrad);             % plot channels inside plotting circle
     intchans = find(x <= intrad & y <= intrad); % interpolate and plot channels inside interpolation square
 
-%%  Eliminate channels not plotted 
+%%  Eliminate channels not plotted
+
     allx      = x;
     ally      = y;
     intchans; % interpolate using only the 'intchans' channels
@@ -78,9 +85,11 @@ Values      = Values(plotchans);
 
     intValues = Values(intchans);
     Values = Values(pltchans);
+    
     % now channel parameters and values all refer to plotting channels only
 
     allchansind = allchansind(pltchans);
+    
     intTh = Th(intchans);           % eliminate channels outside the interpolation area
     intRd = Rd(intchans);
     intx  = x(intchans);
@@ -93,6 +102,7 @@ Values      = Values(plotchans);
     labels = labels(pltchans,:);
 
 %%  Squeeze channel locations to <= rmax
+
     squeezefac  = rmax/plotrad;
     intRd       = intRd*squeezefac; % squeeze electrode arc_lengths towards the vertex
     Rd          = Rd*squeezefac;       % squeeze electrode arc_lengths towards the vertex
@@ -108,7 +118,8 @@ Values      = Values(plotchans);
     % rotate channels based on chaninfo %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
      rotate = 0;
 
-%%  Make the plot 
+%%  Make the plot
+
     xmin = min(-rmax,min(intx)); xmax = max(rmax,max(intx));
     ymin = min(-rmax,min(inty)); ymax = max(rmax,max(inty));
 
@@ -133,22 +144,22 @@ Values      = Values(plotchans);
     hold on
     h = gca;    % uses current axes
 
-
-  set(gca,'Xlim',[-rmax rmax]*AXHEADFAC,'Ylim',[-rmax rmax]*AXHEADFAC,'color','w','xcolor','w','ycolor','w','zcolor','w','xtick',[],'ytick',[]);
+	set(gca,'Xlim',[-rmax rmax]*AXHEADFAC,'Ylim',[-rmax rmax]*AXHEADFAC,...
+        'color','w','xcolor','w','ycolor','w','zcolor','w','xtick',[],'ytick',[]);
 
 %%  plot
-    tmph = surface(Xi-delta/2,Yi-delta/2,zeros(size(Zi)),Zi,'EdgeColor','none','FaceColor','flat'); % 'FaceColor','interp' or 'flat'
+
+    tmph = surface(Xi-delta/2,Yi-delta/2,zeros(size(Zi)),Zi,...
+        'EdgeColor','none','FaceColor','flat'); % 'FaceColor','interp' or 'flat'
     colormap jet
     
 %%  Set color axis
+
     caxis([amin amax]) % set coloraxis
-
-
-
     handle = gca;
 
-
 %%  Plot filled ring to mask jagged grid boundary
+
     hwidth  = HEADRINGWIDTH;                        % width of head ring 
     hin     = squeezefac*headrad*(1- hwidth/2);     % inner head ring radius
 
@@ -158,9 +169,8 @@ Values      = Values(plotchans);
         rin = hin;                                  % don't blank inside the head ring
     end
 
-
-
 %%  mask the jagged border around rmax
+
     circ    = linspace(0,2*pi,CIRCGRID);
     rx      = sin(circ); 
     ry      = cos(circ); 
@@ -169,13 +179,14 @@ Values      = Values(plotchans);
 
     ringh   = patch(ringx,ringy,0.01*ones(size(ringx)),BACKCOLOR,'edgecolor','none'); hold on 
 
-
 %%  Plot head outline
+
     headx = [[rx(:)' rx(1) ]*(hin+hwidth)  [rx(:)' rx(1)]*hin];
     heady = [[ry(:)' ry(1) ]*(hin+hwidth)  [ry(:)' ry(1)]*hin];
     ringh  = patch(headx,heady,ones(size(headx)),'k','edgecolor','none'); hold on
 
 %%  Plot ears and nose
+
     base  = rmax-.0046;
     basex = 0.18*rmax;          % nose width
     tip   = 1.15*rmax; 
@@ -194,6 +205,7 @@ Values      = Values(plotchans);
 
 
 %%  Show electrode information
+
      plotax = gca;
      axis square                                      
      axis off
@@ -214,6 +226,7 @@ Values      = Values(plotchans);
 
 
 %%  Mark electrode locations only
+
     ELECTRODE_HEIGHT = 2.1;  % z value for plotting electrode information (above the surf)
     hp2 = plot3(y*.95,x*.95,ones(size(x))*ELECTRODE_HEIGHT,...
             EMARKER,'Color',ECOLOR,'markersize',EMARKERSIZE,'linewidth',EMARKERLINEWIDTH);
@@ -221,6 +234,6 @@ Values      = Values(plotchans);
 
 %%%%%%%%%%%%% Set EEGLAB background color to match head border %%%%%%%%%%%%%%%%%%%%%%%%
 
-hold off
-axis off
-return
+    hold off
+    axis off
+    return
