@@ -8,7 +8,7 @@ They have been developed at the MPI for Human Development in the ConMem project.
 
 Open a GUI with prelabeled channels. This uses the eeglab GUI and therefore depends on an eeglab-type data specification.
 
-To load default coordinates in a 10-20 system, you can use the following code. The ```.txt`` file needs to be manually created from ```eeglabl/sample_locs/Standard-10-20-Cap81.ced```.
+To load default coordinates in a 10-20 system, you can use the following code. The ```.txt``` file needs to be manually created from ```eeglab/sample_locs/Standard-10-20-Cap81.ced```.
 
 ```
 eloc = readtable(fullfile(pn.channel_locations, 'Standard-10-20-Cap81_ced.txt'));
@@ -29,11 +29,11 @@ Plot a single topography based on the provided channel information.
 
 - ```cm_eeg_finputcheck``` *deprecated*
 
-Copy of EEGlab's ```finputcheck```. 
+Copy of EEGlab's ```finputcheck```.  
 This is now replaced: ```addpath(fullfile(pn.tools ,'eeglab')); eeglab;```
 
 - ```cm_eeg_readlocs``` *deprecated*
 
-Copy of EEGlab's ```readlocs```.
-This is now replaced: ```addpath(fullfile(pn.tools ,'eeglab')); eeglab;```
+Copy of EEGlab's ```readlocs```. 
+This is now replaced: ```addpath(fullfile(pn.tools ,'eeglab')); eeglab;``` 
 See eeglab's documentation on reading in coordinates [here](https://eeglab.org/tutorials/04_Import/Channel_Locations.html).
