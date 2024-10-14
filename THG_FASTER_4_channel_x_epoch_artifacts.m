@@ -1,4 +1,4 @@
-function [index parm zval] = THG_FASTER_4_channel_x_epoch_artifacts_20140302(cfg,data)
+function [index parm zval] = THG_FASTER_4_channel_x_epoch_artifacts(cfg,data)
 
 %% defaults
 if ~isfield(cfg,'criterion'); criterion = 3; else criterion = cfg.criterion; end
@@ -50,16 +50,16 @@ zval.c_x_e_dev = zscore(parm.c_x_e_dev);
 tmpz = zval;
 
 % variance outlier
-tmpz.c_x_e_var = cm_outlier2nan_20140311(tmpz.c_x_e_var,'>',criterion,recursive);
+tmpz.c_x_e_var = cm_outlier2nan(tmpz.c_x_e_var,'>',criterion,recursive);
 
 % median gradient outlier
-tmpz.c_x_e_med = cm_outlier2nan_20140311(tmpz.c_x_e_med,'>',criterion,recursive);
+tmpz.c_x_e_med = cm_outlier2nan(tmpz.c_x_e_med,'>',criterion,recursive);
 
 % amplitude range outlier
-tmpz.c_x_e_amp = cm_outlier2nan_20140311(tmpz.c_x_e_amp,'>',criterion,recursive);
+tmpz.c_x_e_amp = cm_outlier2nan(tmpz.c_x_e_amp,'>',criterion,recursive);
 
 % deviation outlier
-tmpz.c_x_e_dev = cm_outlier2nan_20140311(tmpz.c_x_e_dev,'>',criterion,recursive);
+tmpz.c_x_e_dev = cm_outlier2nan(tmpz.c_x_e_dev,'>',criterion,recursive);
 
 %% mark outlier
 

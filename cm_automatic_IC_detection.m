@@ -1,4 +1,4 @@
-function [iclabels] = cm_automatic_IC_detection_20170919(data,icadata)
+function [iclabels] = cm_automatic_IC_detection(data,icadata)
 
 % automatically detects IC most likely representing eye blinks, eye 
 % movements, muscle artifacts related to eye blinks and eye movements, as 

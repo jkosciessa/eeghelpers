@@ -1,6 +1,6 @@
-function data = cm_outlier2nan_20140311(data,comparator,criterion,recursive)
+function data = cm_outlier2nan(data,comparator,criterion,recursive)
 %
-% data = cm_outlier2nan_20140311(data,comparator,criterion,recursive)
+% data = cm_outlier2nan(data,comparator,criterion,recursive)
 %
 % marks outlier in data as NaN
 % input:  data       = [N x 1] vector
@@ -23,7 +23,7 @@ elseif sz(2) == 1 && sz(1) > 1
 end
 
 % temporary z values
-z = cm_nanzscore_20140302(data);
+z = cm_nanzscore(data);
 
 % initialize index variable
 index = [];
@@ -52,7 +52,7 @@ if ~isempty(index)
         Nex = length(index);
 
         % new zscore calculation after outlier exclusion
-        z = cm_nanzscore_20140302(z);
+        z = cm_nanzscore(z);
 
         % find channels to exclude
         if strcmp(comparator,'>/<')

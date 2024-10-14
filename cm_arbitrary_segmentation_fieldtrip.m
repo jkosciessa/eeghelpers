@@ -1,4 +1,4 @@
-function [new data] = cm_arbitrary_segmentation_fieldtrip_20151002(data,cfg)
+function [new data] = cm_arbitrary_segmentation_fieldtrip(data,cfg)
 %
 % data = cm_arbitrary_segmentation_fieldtrip(data,cfg)
 %

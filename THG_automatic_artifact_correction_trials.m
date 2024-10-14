@@ -1,4 +1,4 @@
-function [data index] = THG_automatic_artifact_correction_trials_20170922(data)
+function [data index] = THG_automatic_artifact_correction_trials(data)
 
 %%  preset config
 
@@ -14,11 +14,11 @@ function [data index] = THG_automatic_artifact_correction_trials_20170922(data)
 
 %%  get artifact contaminated epoch by kurtosis, low & high frequency artifacts
 
-        [indexA parmA zvalA] = cm_MWB_channel_x_epoch_artifacts_20170922(cfg,data);
+        [indexA parmA zvalA] = cm_MWB_channel_x_epoch_artifacts(cfg,data);
 
 %%  get artifact contaminated epochs by FASTER
 
-        [indexB parmB zvalB] = THG_FASTER_2_epoch_artifacts_20140302(cfg,data);
+        [indexB parmB zvalB] = THG_FASTER_2_epoch_artifacts(cfg,data);
 
 %%  delete trials
 
@@ -54,4 +54,3 @@ function [data index] = THG_automatic_artifact_correction_trials_20170922(data)
         end
 
     end
-

@@ -15,7 +15,7 @@
 % THG 02.03.2014: algorithm downloaded together with the FASTER toolbox on
 % 02.03.2014
 
-function [hurst] = cm_heuristic_hurst_exponent_20140302(ts)
+function [hurst] = cm_heuristic_hurst_exponent(ts)
 %
 % input:  ts = 1xN time series
 % output: hurst = hurst exponent of the input time series

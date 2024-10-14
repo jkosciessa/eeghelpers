@@ -1,4 +1,4 @@
-function [handle,Zi,grid,Xi,Yi] = cm_eeg_topoplot_20140226(Values,loc_file,MAPLIMITS)
+function [handle,Zi,grid,Xi,Yi] = cm_eeg_topoplot(Values,loc_file,MAPLIMITS)
 
 %%  functions needed:
 %   - THG_eeg_readlocs
@@ -33,24 +33,16 @@ BLANKINGRINGWIDTH = .05;    % width of the blanking ring
 HEADRINGWIDTH    = .01;     % width of the cartoon head ring
 % SHADING = 'flat';         % default 'shading': flat|interp
 
-
-
-
 cmap = colormap;
 cmaplen = size(cmap,1);
 
-
-
-
 %% Read the channel location information
-[tmpeloc labels Th Rd indices] = cm_eeg_readlocs_20140226( loc_file );
+[tmpeloc labels Th Rd indices] = cm_eeg_readlocs( loc_file );
 Th = pi/180*Th;                              
 allchansind = 1:length(Th);
 
 %%  Channels to plot    
     plotchans = indices;
-
-
 
 x = [tmpeloc.X];
 y = [tmpeloc.Y];

@@ -188,7 +188,7 @@
 % Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
 
-function [eloc, labels, theta, radius, indices] = cm_eeg_readlocs_20140226( filename, varargin ); 
+function [eloc, labels, theta, radius, indices] = cm_eeg_readlocs( filename, varargin ); 
 
 if nargin < 1
 	help readlocs;

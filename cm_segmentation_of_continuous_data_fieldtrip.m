@@ -1,6 +1,6 @@
-function [new data] = cm_segmentation_of_continuous_data_fieldtrip_20150825(data,cfg)
+function [new data] = cm_segmentation_of_continuous_data_fieldtrip(data,cfg)
 %
-% data = cm_segmentation_of_continuous_data_fieldtrip_20141217(data,cfg)
+% data = cm_segmentation_of_continuous_data_fieldtrip(data,cfg)
 %
 % segmentation of existing continuous fieldtrip data into segments as
 % defined by cfg.trl
@@ -37,5 +37,3 @@ end; clear j
 % update fields
 new.fsample = data.fsample;
 new.sampleinfo = cfg.trl(:,1:2);
-
-    

@@ -1,4 +1,4 @@
-function [index parm zval] = cm_MWB_channel_x_epoch_artifacts_20170922(cfg,data)
+function [index parm zval] = cm_MWB_channel_x_epoch_artifacts(cfg,data)
 
 % 20170922 JQK extended padding to 20
 
@@ -70,16 +70,16 @@ zval.t_high = fft_hi.trial.zscore;
 tmp = parm;
 
 % kurtosis outlier
-tmp.c_kurt = cm_outlier2nan_20140311(tmp.c_kurt,'>',criterion,recursive);
-tmp.t_kurt = cm_outlier2nan_20140311(tmp.t_kurt,'>',criterion,recursive);
+tmp.c_kurt = cm_outlier2nan(tmp.c_kurt,'>',criterion,recursive);
+tmp.t_kurt = cm_outlier2nan(tmp.t_kurt,'>',criterion,recursive);
 
 % low frequency outlier
-tmp.c_low = cm_outlier2nan_20140311(tmp.c_low,'>',criterion,recursive);
-tmp.t_low = cm_outlier2nan_20140311(tmp.t_low,'>',criterion,recursive);
+tmp.c_low = cm_outlier2nan(tmp.c_low,'>',criterion,recursive);
+tmp.t_low = cm_outlier2nan(tmp.t_low,'>',criterion,recursive);
 
 % high frequency outlier
-tmp.c_high = cm_outlier2nan_20140311(tmp.c_high,'>',criterion,recursive);
-tmp.t_high = cm_outlier2nan_20140311(tmp.t_high,'>',criterion,recursive);
+tmp.c_high = cm_outlier2nan(tmp.c_high,'>',criterion,recursive);
+tmp.t_high = cm_outlier2nan(tmp.t_high,'>',criterion,recursive);
 
 %% mark outlier
 

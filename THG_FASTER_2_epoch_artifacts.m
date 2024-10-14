@@ -1,4 +1,4 @@
-function [index parm zval] = THG_FASTER_2_epoch_artifacts_20140302(cfg,data)
+function [index parm zval] = THG_FASTER_2_epoch_artifacts(cfg,data)
 
 %% defaults
 if ~isfield(cfg,'criterion'); criterion = 3; else criterion = cfg.criterion; end
@@ -39,13 +39,13 @@ zval.epoch_dev = zscore(parm.epoch_dev);
 tmpz = zval;
 
 % amplitude range outlier
-tmpz.epoch_amp = cm_outlier2nan_20140311(tmpz.epoch_amp,'>',criterion,recursive);
+tmpz.epoch_amp = cm_outlier2nan(tmpz.epoch_amp,'>',criterion,recursive);
 
 % variance outlier
-tmpz.epoch_var = cm_outlier2nan_20140311(tmpz.epoch_var,'>',criterion,recursive);
+tmpz.epoch_var = cm_outlier2nan(tmpz.epoch_var,'>',criterion,recursive);
 
 % channel deviation outlier
-tmpz.epoch_dev = cm_outlier2nan_20140311(tmpz.epoch_dev,'>',criterion,recursive);
+tmpz.epoch_dev = cm_outlier2nan(tmpz.epoch_dev,'>',criterion,recursive);
 
 %% mark outlier
 

@@ -1,4 +1,4 @@
-function zvals = cm_nanzscore_140302(data)
+function zvals = cm_nanzscore(data)
 
 ind_nan = find(isnan(data));
 ind_num = find(~isnan(data));

@@ -1,4 +1,4 @@
-function [iclabels] = cm_label_ica_gui_20180116(cfg,data)
+function [iclabels] = cm_label_ica_gui(cfg,data)
 %
 % INPUT:    data         = ica data structure
 %           cfg.topoall  = 'yes': plot overview (topographies of all channels)
@@ -19,10 +19,10 @@ function [iclabels] = cm_label_ica_gui_20180116(cfg,data)
 % 16.01.2018 JQK
 % - added EMG as labeling choice
 
-%%  set default values
-    if ~isfield(cfg,'topoall')
-        cfg.topoall = 'no';
-    end
+%% set default values
+if ~isfield(cfg,'topoall')
+    cfg.topoall = 'no';
+end
 
 %% construct info structure for plotting (see subfun below)
 info = construct_info_100521(data);
@@ -400,139 +400,140 @@ end
 %% basic subfunctions
 
 function varargout = next(fig, eventdata, handles, varargin)
-info = guidata(fig);
-if info.i < info.nic,
-  info.i = info.i + 1;
-end;
-guidata(fig,info);
-uiresume;
+    info = guidata(fig);
+    if info.i < info.nic
+      info.i = info.i + 1;
+    end
+    guidata(fig,info);
+    uiresume;
 
 function varargout = prev(fig, eventdata, handles, varargin)
-info = guidata(fig);
-if info.i > 1,
-  info.i = info.i - 1;
-end;
-guidata(fig,info);
-uiresume;
+    info = guidata(fig);
+    if info.i > 1
+      info.i = info.i - 1;
+    end
+    guidata(fig,info);
+    uiresume;
 
 function varargout = next_sngl(fig, eventdata, handles, varargin)
-info = guidata(fig);
-if info.index < info.ntrls,
-  info.index = info.index + 1;
-end;
-guidata(fig,info);
-uiresume;
+    info = guidata(fig);
+    if info.index < info.ntrls
+      info.index = info.index + 1;
+    end
+    guidata(fig,info);
+    uiresume;
 
 function varargout = prev_sngl(fig, eventdata, handles, varargin)
-info = guidata(fig);
-if info.index > 1,
-  info.index = info.index - 1;
-end;
-guidata(fig,info);
-uiresume;
+    info = guidata(fig);
+    if info.index > 1
+      info.index = info.index - 1;
+    end
+    guidata(fig,info);
+    uiresume;
 
 function varargout = OK(fig, eventdata, handles, varargin)
-info = guidata(fig);
-info.txt{info.i,1} = 'OK';
-guidata(fig,info);
-next(fig);
-uiresume;
+    info = guidata(fig);
+    info.txt{info.i,1} = 'OK';
+    guidata(fig,info);
+    next(fig);
+    uiresume;
 
 function varargout = blink(fig, eventdata, handles, varargin)
-info = guidata(fig);
-info.txt{info.i,1} = 'BLINK';
-guidata(fig,info);
-next(fig);
-uiresume;
+    info = guidata(fig);
+    info.txt{info.i,1} = 'BLINK';
+    guidata(fig,info);
+    next(fig);
+    uiresume;
 
 function varargout = move(fig, eventdata, handles, varargin)
-info = guidata(fig);
-info.txt{info.i,1} = 'MOVE';
-guidata(fig,info);
-next(fig);
-uiresume;
+    info = guidata(fig);
+    info.txt{info.i,1} = 'MOVE';
+    guidata(fig,info);
+    next(fig);
+    uiresume;
 
 function varargout = tongue(fig, eventdata, handles, varargin)
-info = guidata(fig);
-info.txt{info.i,1} = 'TONGUE';
-guidata(fig,info);
-next(fig);
-uiresume;
+    info = guidata(fig);
+    info.txt{info.i,1} = 'TONGUE';
+    guidata(fig,info);
+    next(fig);
+    uiresume;
 
 function varargout = heart(fig, eventdata, handles, varargin)
-info = guidata(fig);
-info.txt{info.i,1} = 'HEART';
-guidata(fig,info);
-next(fig);
-uiresume;
+    info = guidata(fig);
+    info.txt{info.i,1} = 'HEART';
+    guidata(fig,info);
+    next(fig);
+    uiresume;
 
 function varargout = emg(fig, eventdata, handles, varargin)
-info = guidata(fig);
-info.txt{info.i,1} = 'EMG';
-guidata(fig,info);
-next(fig);
-uiresume;
+    info = guidata(fig);
+    info.txt{info.i,1} = 'EMG';
+    guidata(fig,info);
+    next(fig);
+    uiresume;
 
 function varargout = artefact(fig, eventdata, handles, varargin)
-info = guidata(fig);
-info.txt{info.i,1} = 'ARTEFACT';
-guidata(fig,info);
-next(fig);
-uiresume;
+    info = guidata(fig);
+    info.txt{info.i,1} = 'ARTEFACT';
+    guidata(fig,info);
+    next(fig);
+    uiresume;
 
 function varargout = electrode(fig, eventdata, handles, varargin)
-info = guidata(fig);
-info.txt{info.i,1} = 'ELECTRODE';
-guidata(fig,info);
-next(fig);
-uiresume;
+    info = guidata(fig);
+    info.txt{info.i,1} = 'ELECTRODE';
+    guidata(fig,info);
+    next(fig);
+    uiresume;
 
 function varargout = reference(fig, eventdata, handles, varargin)
-info = guidata(fig);
-info.txt{info.i,1} = 'REFERENCE';
-guidata(fig,info);
-next(fig);
-uiresume;
+    info = guidata(fig);
+    info.txt{info.i,1} = 'REFERENCE';
+    guidata(fig,info);
+    next(fig);
+    uiresume;
 
 function varargout = unclear(fig, eventdata, handles, varargin)
-info = guidata(fig);
-info.txt{info.i,1} = '?';
-guidata(fig,info);
-next(fig);
-uiresume;
+    info = guidata(fig);
+    info.txt{info.i,1} = '?';
+    guidata(fig,info);
+    next(fig);
+    uiresume;
 
 function varargout = stop(fig, eventdata, handles, varargin)
-info = guidata(fig);
-info.quit = 1;
-guidata(fig,info);
-uiresume;
+    info = guidata(fig);
+    info.quit = 1;
+    guidata(fig,info);
+    uiresume;
 
 function edittext1(fig,eventdata)
-info = guidata(fig);
-user_string = get(fig,'String');
-user_number = str2double(user_string); clear user_string
-if user_number > info.ntrls || isempty(user_number)
-    errordlg(['trial # must be between 1 and ' num2str(info.ntrls)])
-else
-    info.index = user_number;
-    guidata(fig,info);
-    uiresume;
-end
+    info = guidata(fig);
+    user_string = get(fig,'String');
+    user_number = str2double(user_string); clear user_string
+    if user_number > info.ntrls || isempty(user_number)
+        errordlg(['trial # must be between 1 and ' num2str(info.ntrls)])
+    else
+        info.index = user_number;
+        guidata(fig,info);
+        uiresume;
+    end
 
 function edittext2(fig,eventdata)
-info = guidata(fig);
-user_string = get(fig,'String');
-user_number = str2double(user_string);                                     clear user_string
-if user_number > info.nic || isempty(user_number)
-    errordlg(['component # must be between 1 and ' num2str(info.nic)])
-else
-    info.i = user_number;
-    guidata(fig,info);
-    uiresume;
-end
+    info = guidata(fig);
+    user_string = get(fig,'String');
+    user_number = str2double(user_string);
+    clear user_string
+    if user_number > info.nic || isempty(user_number)
+        errordlg(['component # must be between 1 and ' num2str(info.nic)])
+    else
+        info.i = user_number;
+        guidata(fig,info);
+        uiresume;
+    end
 
 
-%% subfunction get configs = prerpocessing and plot settings
+%% subfunction get configs = preprocessing and plot settings
 function cfg = get_config(data)
 
     cfg.fft = [];
@@ -542,7 +543,7 @@ function cfg = get_config(data)
     cfg.fft.foilim     = [0.1 100];
     cfg.fft.keeptrials = 'no';
 
-    cfg.fd.jackknife     = 'yes';     %fdcfg
+    cfg.fd.jackknife     = 'yes';
     cfg.fd.biascorrect   = 'yes';
 
     cfg.p = [];
@@ -554,109 +555,111 @@ function cfg = get_config(data)
 %% subfunction construct info
 function info = construct_info_100521(data)
 
-tic
-%% basic info values
-% number of components
-info.nic = size(data.topo,2);
-% number of trials
-info.ntrls = length(data.trial);
+    tic
+    %% basic info values
+    % number of components
+    info.nic = size(data.topo,2);
+    % number of trials
+    info.ntrls = length(data.trial);
+    % time vector
+    info.data.time = data.time{1};
 
-% time vector
-info.data.time = data.time{1};
+    %% get backprojections
+    % topographies
+    info.topo.dat  = double(data.topo);
+    info.topo.mean = single(mean(info.topo.dat));
+    info.topo.max  = single(max(info.topo.dat));
+    info.topo.min  = single(min(info.topo.dat));
+    % topography Pz
+    ind_Pz         = find(strcmp(data.topolabel,'Pz'));
+    info.topo.Pz   = single(info.topo.dat(ind_Pz,:));
+    clear ind_Pz
 
-%% get backprojections
-% topographies
-info.topo.dat  = double(data.topo);
-info.topo.mean = single(mean(info.topo.dat));
-info.topo.max  = single(max(info.topo.dat));
-info.topo.min  = single(min(info.topo.dat));
-% topography Pz
-ind_Pz         = find(strcmp(data.topolabel,'Pz'));
-info.topo.Pz   = single(info.topo.dat(ind_Pz,:));          clear ind_Pz
+    % mean backprojections
+    info.data.trls = single(zeros(info.nic,info.ntrls,length(info.data.time)));
+    for k = 1:info.ntrls
+        info.data.trls(:,k,:) = (info.topo.mean'*ones(1,length(info.data.time))).*data.trial{1,k};
+    end; clear k
+    % max backprojections
+    tmp = single(zeros(info.nic,info.ntrls,length(info.data.time)));
+    for k = 1:info.ntrls
+        tmp(:,k,:)           = (info.topo.max'*ones(1,length(info.data.time))).*data.trial{1,k};
+    end; clear k
+    info.data.erpmax = squeeze(mean(tmp,2));
+    % min backprojections
+    tmp = single(zeros(info.nic,info.ntrls,length(info.data.time)));
+    for k = 1:info.ntrls
+        tmp(:,k,:)           = (info.topo.min'*ones(1,length(info.data.time))).*data.trial{1,k};
+    end; clear k
+    info.data.erpmin = squeeze(mean(tmp,2));
+    % Pz backprojections
+    tmp = single(zeros(info.nic,info.ntrls,length(info.data.time)));
+    for k = 1:info.ntrls
+        tmp(:,k,:)           = (info.topo.Pz'*ones(1,length(info.data.time))).*data.trial{1,k};
+    end; clear k
+    info.data.erpPz = squeeze(mean(tmp,2));
+    info.data.erpPzm = sum(info.data.erpPz);
 
-% mean backprojections
-info.data.trls = single(zeros(info.nic,info.ntrls,length(info.data.time)));
-for k = 1:info.ntrls
-    info.data.trls(:,k,:) = (info.topo.mean'*ones(1,length(info.data.time))).*data.trial{1,k};
-end; clear k
-% max backprojections
-tmp = single(zeros(info.nic,info.ntrls,length(info.data.time)));
-for k = 1:info.ntrls
-    tmp(:,k,:)           = (info.topo.max'*ones(1,length(info.data.time))).*data.trial{1,k};
-end; clear k
-info.data.erpmax = squeeze(mean(tmp,2));
-% min backprojections
-tmp = single(zeros(info.nic,info.ntrls,length(info.data.time)));
-for k = 1:info.ntrls
-    tmp(:,k,:)           = (info.topo.min'*ones(1,length(info.data.time))).*data.trial{1,k};
-end; clear k
-info.data.erpmin = squeeze(mean(tmp,2));
-% Pz backprojections
-tmp = single(zeros(info.nic,info.ntrls,length(info.data.time)));
-for k = 1:info.ntrls
-    tmp(:,k,:)           = (info.topo.Pz'*ones(1,length(info.data.time))).*data.trial{1,k};
-end; clear k
-info.data.erpPz = squeeze(mean(tmp,2));
-info.data.erpPzm = sum(info.data.erpPz);
+    %% data preprocessing - fft (on raw ICs!)
+    data.label = data.topolabel;
+    if isfield(data,'iclabels')
+        data = rmfield(data,{'topolabel','topo','cfg','iclabels'});
+    else
+        data = rmfield(data,{'topolabel','topo','cfg'});
+    end
 
-%% data preprocessing - fft (on raw ICs!)
-data.label = data.topolabel;
-if isfield(data,'iclabels')
-    data = rmfield(data,{'topolabel','topo','cfg','iclabels'});
-else
-    data = rmfield(data,{'topolabel','topo','cfg'});
-end
+    % preprocessing values
+    cfg = get_config(data);
 
-% preprocessing values
-cfg = get_config(data);
+    % fft of ICs
+    fftdat = ft_freqanalysis(cfg.fft,data);                                   
+    info.fft.dat = fftdat.powspctrm;
+    for k = 1:size(info.fft.dat,2)
+        tmp = info.fft.dat(:,k);
+        info.fft.scaled(:,k) = (tmp - mean(tmp)) ./ std(tmp);
+    end; 
+    clear k tmp
 
-% fft of ICs
-fftdat = ft_freqanalysis(cfg.fft,data);                                   
-info.fft.dat = fftdat.powspctrm;
-for k = 1:size(info.fft.dat,2)
-    tmp = info.fft.dat(:,k);
-    info.fft.scaled(:,k) = (tmp - mean(tmp)) ./ std(tmp);
-end;                                                                       clear k tmp
+    % scaling values
+    info.fft.maxpow = max(max(info.fft.dat));
+    info.fft.minpow = min(min(info.fft.dat));
+    info.fft.maxpow_scaled = max(max(info.fft.scaled));
+    info.fft.minpow_scaled = min(min(info.fft.scaled));
 
-% scaling values
-info.fft.maxpow = max(max(info.fft.dat));
-info.fft.minpow = min(min(info.fft.dat));
-info.fft.maxpow_scaled = max(max(info.fft.scaled));
-info.fft.minpow_scaled = min(min(info.fft.scaled));
+    % freqencies
+    info.fft.freq = fftdat.freq;
+    clear fftdat
 
-% freqencies
-info.fft.freq = fftdat.freq;                                               clear fftdat
+    %% data preprocessing - data
+    % random data indices
+    tempidc = randperm(info.ntrls);
+    tempidc = tempidc(1:4);
 
-%% data preprocessing - data
-% random data indices
-tempidc = randperm(info.ntrls);
-tempidc = tempidc(1:4);
-    
-% erpimage & erp 
-for j = 1:info.nic
-    
-    info.data.meanerp(j) = mean(mean(squeeze(info.data.trls(j,:,:))));
-    info.data.stderp(j)  = std(std(squeeze(info.data.trls(j,:,:))));
-    
-    % ERP1
-    info.data.erpmini1(j) = min(min([info.data.erpmin(j,:) info.data.erpmax(j,:)]));
-    info.data.erpmaxi1(j) = max(max([info.data.erpmin(j,:) info.data.erpmax(j,:)]));
-    info.data.erpmini1_(j) = round(info.data.erpmini1(j)*100)/100;
-    info.data.erpmaxi1_(j) = round(info.data.erpmaxi1(j)*100)/100;
-    
-    % ERP2
-    info.data.erpmini2(j) = min(info.data.erpPzm);
-    info.data.erpmaxi2(j) = max(info.data.erpPzm);
-    info.data.erpmini2_(j) = round(info.data.erpmini2(j)*100)/100;
-    info.data.erpmaxi2_(j) = round(info.data.erpmaxi2(j)*100)/100;
+    % erpimage & erp 
+    for j = 1:info.nic
 
-    % random data        
-    info.data.rand(j,:,:) = single(squeeze(info.data.trls(j,tempidc,:))); 
-    
-end; clear j tempidc
-    
-% get preprocessing & plot configs
-info.cfg.topoplot  = cfg.p;
+        info.data.meanerp(j) = mean(mean(squeeze(info.data.trls(j,:,:))));
+        info.data.stderp(j)  = std(std(squeeze(info.data.trls(j,:,:))));
 
-clear cfg data
-toc
+        % ERP1
+        info.data.erpmini1(j) = min(min([info.data.erpmin(j,:) info.data.erpmax(j,:)]));
+        info.data.erpmaxi1(j) = max(max([info.data.erpmin(j,:) info.data.erpmax(j,:)]));
+        info.data.erpmini1_(j) = round(info.data.erpmini1(j)*100)/100;
+        info.data.erpmaxi1_(j) = round(info.data.erpmaxi1(j)*100)/100;
+
+        % ERP2
+        info.data.erpmini2(j) = min(info.data.erpPzm);
+        info.data.erpmaxi2(j) = max(info.data.erpPzm);
+        info.data.erpmini2_(j) = round(info.data.erpmini2(j)*100)/100;
+        info.data.erpmaxi2_(j) = round(info.data.erpmaxi2(j)*100)/100;
+
+        % random data        
+        info.data.rand(j,:,:) = single(squeeze(info.data.trls(j,tempidc,:))); 
+
+    end; clear j tempidc
+
+    % get preprocessing & plot configs
+    info.cfg.topoplot  = cfg.p;
+
+    clear cfg data
+    toc

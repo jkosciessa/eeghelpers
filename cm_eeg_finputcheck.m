@@ -62,7 +62,7 @@
 % along with this program; if not, write to the Free Software
 % Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 
-function [g, varargnew] = cm_eeg_finputcheck_20140226( vararg, fieldlist, callfunc, mode, verbose )
+function [g, varargnew] = cm_eeg_finputcheck( vararg, fieldlist, callfunc, mode, verbose )
 
 	if nargin < 2
 		help finputcheck;

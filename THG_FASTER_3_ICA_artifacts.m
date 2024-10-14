@@ -1,4 +1,4 @@
-function [index parm zval] = THG_FASTER_3_ICA_artifacts_20140305(cfg,data)
+function [index parm zval] = THG_FASTER_3_ICA_artifacts(cfg,data)
 
 %% defaults
 if ~isfield(cfg,'criterion'); criterion = 3; else criterion = cfg.criterion; end
@@ -21,7 +21,7 @@ zval.ica_kurt = zscore(parm.ica_kurt);
 for t = 1:length(comp.trial)
     display(['processing trial ' num2str(t)])
 for c = 1:length(comp.label)
-    hurst(c,t) = cm_heuristic_hurst_exponent_20140302(comp.trial{t}(c,:));
+    hurst(c,t) = cm_heuristic_hurst_exponent(comp.trial{t}(c,:));
 end; clear c
 end; clear t
 
@@ -171,7 +171,7 @@ if ~isempty(index)
         Nex = length(index);
 
         % new zscore calculation after outlier exclusion
-        z = cm_nanzscore_140302(z);
+        z = cm_nanzscore(z);
 
         % find channels to exclude
         index_2 = find( z > criterion );

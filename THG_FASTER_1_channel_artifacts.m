@@ -1,4 +1,4 @@
-function [index parm zval] = cm_FASTER_1_channel_artifacts_20140302(cfg,data)
+function [index parm zval] = cm_FASTER_1_channel_artifacts(cfg,data)
 
 %% defaults
 if ~isfield(cfg,'criterion'); criterion = 3; else criterion = cfg.criterion; end
@@ -17,7 +17,7 @@ for j = 1:length(cor)
 end; clear j
 
 % z statistic
-parm.chan_cor = cm_inv_fisher_Z_20130605(nanmean(cm_fisher_Z_20130426(cor))'); 
+parm.chan_cor = cm_inv_fisher_Z(nanmean(cm_fisher_Z(cor))'); 
 zval.chan_cor = zscore(parm.chan_cor); 
 
 %% channel variance
@@ -32,7 +32,7 @@ zval.chan_var = zscore(parm.chan_var);
 for t = 1:length(data.trial)
     display(['processing trial ' num2str(t)])
 for c = 1:length(data.label)
-    hurst(c,t) = cm_heuristic_hurst_exponent_20140302(data.trial{t}(c,:));
+    hurst(c,t) = cm_heuristic_hurst_exponent(data.trial{t}(c,:));
 end; clear c
 end; clear t
 
@@ -46,15 +46,14 @@ zval.chan_hurst = zscore(parm.chan_hurst);
 tmpz = zval;
 
 % correlation outlier
-tmpz.chan_cor = cm_outlier2nan_20140311(tmpz.chan_cor,'<',criterion,recursive);
+tmpz.chan_cor = cm_outlier2nan(tmpz.chan_cor,'<',criterion,recursive);
 
 % variance outlier
-tmpz.chan_var = cm_outlier2nan_20140311(tmpz.chan_var,'>',criterion,recursive);
+tmpz.chan_var = cm_outlier2nan(tmpz.chan_var,'>',criterion,recursive);
 
 % hurst exponent outlier
-tmpz.chan_hurst = cm_outlier2nan_20140311(tmpz.chan_hurst,'>/<',criterion,recursive);
+tmpz.chan_hurst = cm_outlier2nan(tmpz.chan_hurst,'>/<',criterion,recursive);
 
 %% mark outlier
 
 index = find( isnan(tmpz.chan_cor) | isnan(tmpz.chan_var) | isnan(tmpz.chan_hurst) );
-

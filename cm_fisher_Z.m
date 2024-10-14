@@ -1,4 +1,4 @@
-function Z = cm_fisher_Z_20130426(r)
+function Z = cm_fisher_Z(r)
 %
 % Z = cm_fisher_Z(r)
 %
