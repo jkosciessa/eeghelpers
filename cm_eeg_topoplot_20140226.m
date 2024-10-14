@@ -52,8 +52,9 @@ allchansind = 1:length(Th);
 
 
 
-
-[x,y]       = pol2cart(Th,Rd);  % transform electrode locations from polar to cartesian coordinates
+x = [tmpeloc.X];
+y = [tmpeloc.Y];
+%[x,y]       = pol2cart(Th,Rd);  % transform electrode locations from polar to cartesian coordinates
 plotchans   = abs(plotchans);   % reverse indicated channel polarities
 allchansind = allchansind(plotchans);
 Th          = Th(plotchans);
@@ -133,7 +134,7 @@ Values      = Values(plotchans);
     % Colormap limits
     amin    = MAPLIMITS(1);
     amax    = MAPLIMITS(2);
-    delta   = xi(2)-xi(1); % length of grid entry
+    delta   = (xi(2)-xi(1)); % length of grid entry
 
     % Scale the axes
     cla         % clear current axis

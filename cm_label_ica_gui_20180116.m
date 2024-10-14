@@ -138,10 +138,11 @@ if isfield(cfg,'chanlocs')
             pos_h = b + s_hor*(n-1);
             axes('position',[pos_h pos_v s_hor s_ver])
             set(gca,'xtick',[],'ytick',[])
-            maplim(1) = min(topo([1:64],k));
-            maplim(2) = max(topo([1:64],k));
+            nchans = numel(cfg.chanlocs);
+            maplim(1) = min(topo([1:nchans],k));
+            maplim(2) = max(topo([1:nchans],k));
             maplim = [max(abs(maplim))*-1 max(abs(maplim))];
-            cm_eeg_topoplot_20140226(topo([1:64],k),cfg.chanlocs(1:64),maplim);
+            cm_eeg_topoplot_20140226(topo([1:nchans],k),cfg.chanlocs(1:nchans),maplim);
             % show IC label
             text(0,1.05,[num2str(k) ': ' info.cmp{k,1}],'fontsize',8,'units','normalized')
             % clear variables
@@ -228,7 +229,7 @@ while interactive && ishandle(fig)
     maplim(1) = min(info.topo.dat(:,info.i));
     maplim(2) = max(info.topo.dat(:,info.i));
     maplim = [max(abs(maplim))*-1 max(abs(maplim))];
-    hold on; cm_eeg_topoplot_20140226(info.topo.dat(:,info.i),cfg.chanlocs(1:64),maplim);
+    hold on; cm_eeg_topoplot_20140226(info.topo.dat(:,info.i),cfg.chanlocs(1:nchans),maplim);
     
     % plot the powerspectrum
     li1 = axes('units','normalized','position',[.55 .78 .4 .13],'fontsize',8);

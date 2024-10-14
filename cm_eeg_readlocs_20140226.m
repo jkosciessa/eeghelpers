@@ -571,6 +571,11 @@ if nargout > 3
 end;
 %tmpnum = find(~cellfun('isclass', { eloc.labels }, 'char'));
 %disp('Converting channel labels to string');
+if ~isfield(eloc, 'labels')
+    for index = 1:numel(eloc)
+        eloc(index).labels = eloc(index).Site;
+    end
+end
 for index = 1:length(eloc)
     if ~isstr(eloc(index).labels)
         eloc(index).labels = int2str(eloc(index).labels);

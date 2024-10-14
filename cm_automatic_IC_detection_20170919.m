@@ -11,7 +11,7 @@ dat = cell2mat(data.trial);
 %% find BLINK component
 
 % get ior channel
-ior = dat(find(strcmp(data.label,'VEOG')),:)';
+ior = dat(find(strcmp(data.label,'vEOG')),:)';
 
 % correlation between ior and ICs
 for j = 1:size(ica,1)
@@ -29,7 +29,7 @@ clear r_bli
 %% find MOVE component
 
 % get EOG channels
-eog = dat(find(strcmp(data.label,'HEOG')),:)';
+eog = dat(find(strcmp(data.label,'hEOG')),:)';
 
 % correlation between EOG and ICs
 for j = 1:size(ica,1)
