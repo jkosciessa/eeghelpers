@@ -5,6 +5,7 @@ function [iclabels] = cm_automatic_IC_detection(data,icadata)
 % well as ECG artifacts
 
 %%  get most likely eye & heart components
+
 ica = cell2mat(icadata.trial);
 dat = cell2mat(data.trial);
 
@@ -208,7 +209,7 @@ iclabels.version = '20141217';
 function ic = cm_get_sig_corr(r_ic,crit,excl)
 
 % Fisher Z transform
-Z = cm_fisher_Z_20130426(r_ic);
+Z = cm_fisher_Z(r_ic);
 
 % exclude data
 if exist('excl','var')
