@@ -13,100 +13,121 @@ dat = cell2mat(data.trial);
 % get ior channel
 ior = dat(find(strcmp(data.label,'vEOG')),:)';
 
-% correlation between ior and ICs
-for j = 1:size(ica,1)
-    
-    r_bli(j,1) = corr(ica(j,:)',ior);
-    
-end; clear j
+if ~isempty(ior)
+    % correlation between ior and ICs
+    for j = 1:size(ica,1)
 
-% get "significant" correlation
-bli = cm_get_sig_corr(r_bli,2);
+        r_bli(j,1) = corr(ica(j,:)',ior);
 
-% clear variables
-clear r_bli
+    end; clear j
+
+    % get "significant" correlation
+    bli = cm_get_sig_corr(r_bli,2);
+
+    % clear variables
+    clear r_bli
+    
+else
+    disp("No IOR detected ...")
+    bli = [0,0,0];
+end
 
 %% find MOVE component
 
 % get EOG channels
 eog = dat(find(strcmp(data.label,'hEOG')),:)';
 
-% correlation between EOG and ICs
-for j = 1:size(ica,1)
-    
-    r_mov(j,1) = corr(ica(j,:)',eog);
-    
-end; clear j
+if ~isempty(eog)
+    % correlation between EOG and ICs
+    for j = 1:size(ica,1)
 
-% delete blink component
-excl = [];
-if bli(1,3) == 1
-    excl = [excl bli(1,1)];
+        r_mov(j,1) = corr(ica(j,:)',eog);
+
+    end; clear j
+
+    % delete blink component
+    excl = [];
+    if bli(1,3) == 1
+        excl = [excl bli(1,1)];
+    end
+
+    % get "significant" correlation
+    mov = cm_get_sig_corr(r_mov,2,excl);
+
+    % clear variables
+    clear r_mov excl
+else
+    disp("No EOG detected ...")
+    mov = [0,0,0];
 end
-
-% get "significant" correlation
-mov = cm_get_sig_corr(r_mov,2,excl);
-
-% clear variables
-clear r_mov excl
 
 %% find MOVE muscle spikes
 
-% prepare EOG channel data
-eog = [abs(diff(eog)); 0];
+if ~isempty(eog)
+    % prepare EOG channel data
+    eog = [abs(diff(eog)); 0];
 
-% correlation between EOG and ICs
-for j = 1:size(ica,1)
-    
-    r_spk(j,1) = corr(ica(j,:)',eog);
-    
-end; clear j
+    % correlation between EOG and ICs
+    for j = 1:size(ica,1)
 
-% delete blink & move components
-excl = [];
-if bli(1,3) == 1
-    excl = [excl bli(1,1)];
+        r_spk(j,1) = corr(ica(j,:)',eog);
+
+    end; clear j
+
+    % delete blink & move components
+    excl = [];
+    if bli(1,3) == 1
+        excl = [excl bli(1,1)];
+    end
+    if mov(1,3) == 1
+        excl = [excl mov(1,1)];
+    end
+
+    % get "significant" correlations
+    spk = cm_get_sig_corr(r_spk,2,excl);
+
+    % clear variables
+    clear r_spk excl
+else
+    disp("No EOG detected ...")
+    spk = [0,0,0];
 end
-if mov(1,3) == 1
-    excl = [excl mov(1,1)];
-end
-
-% get "significant" correlations
-spk = cm_get_sig_corr(r_spk,2,excl);
-
-% clear variables
-clear r_spk excl
 
 %% find BLINK muscle component
 
-% prepare components
-ica2 = ica.^2;
-    
-% correlation between ior and squared ICs
-for j = 1:size(ica,1)
-    
-    r_msc(j,1) = abs(corr(ica2(j,:)',ior));
-    
-end; clear j
+if ~isempty(ior)
 
-% delete blink & move components
-excl = [];
-if bli(1,3) == 1
-    excl = [excl bli(1,1)];
+    % prepare components
+    ica2 = ica.^2;
+
+    % correlation between ior and squared ICs
+    for j = 1:size(ica,1)
+
+        r_msc(j,1) = abs(corr(ica2(j,:)',ior));
+
+    end; clear j
+
+    % delete blink & move components
+    excl = [];
+    if bli(1,3) == 1
+        excl = [excl bli(1,1)];
+    end
+    if mov(1,3) == 1
+        excl = [excl mov(1,1)];
+    end
+    if spk(1,3) == 1
+        excl = [excl spk(1,1)];
+    end
+
+    % get "significant" correlations
+    msc = cm_get_sig_corr(r_msc,2,excl);
+
+    % clear variables
+    clear ica2 excl
+else
+    disp("No IOR detected ...")
+    msc = [0,0,0];
 end
-if mov(1,3) == 1
-    excl = [excl mov(1,1)];
-end
-if spk(1,3) == 1
-    excl = [excl spk(1,1)];
-end
-
-% get "significant" correlations
-msc = cm_get_sig_corr(r_msc,2,excl);
-
-% clear variables
-clear ica2 excl
-
 %% find HEART component
 
 % get ecg
