@@ -36,8 +36,12 @@ for c = 1:length(data.label)
 end; clear c
 end; clear t
 
+% some segments may be stationary
+hurst(isnan(hurst)) = 0;
+hurst(hurst==-inf) = 0;
+
 % z statistic of average hurst exponent
-parm.chan_hurst = mean(hurst,2);
+parm.chan_hurst = nanmean(hurst,2);
 zval.chan_hurst = zscore(parm.chan_hurst);
 
 %% find outlier

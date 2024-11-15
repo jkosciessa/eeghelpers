@@ -5,6 +5,7 @@ function [iclabels] = cm_automatic_IC_detection(data,icadata)
 % well as ECG artifacts
 
 %%  get most likely eye & heart components
+
 ica = cell2mat(icadata.trial);
 dat = cell2mat(data.trial);
 
