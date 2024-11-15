@@ -600,7 +600,11 @@ function info = construct_info_100521(data)
     info.data.erpPzm = sum(info.data.erpPz);
 
     %% data preprocessing - fft (on raw ICs!)
-    data.label = data.topolabel;
+    
+    % restrict labels to the number of ICs 
+    % data.label = data.topolabel(1:size(data.trial{1},1));
+    % just stick with label for now
+    data.label = data.label;
     if isfield(data,'iclabels')
         data = rmfield(data,{'topolabel','topo','cfg','iclabels'});
     else
